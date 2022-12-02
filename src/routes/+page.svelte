@@ -21,7 +21,10 @@
 	let actions: ConeAction[] = [];
 
 	$: {
-		console.log(actions);
+		console.log("actions", actions);
+		updatePole();
+		junctions = junctions;
+		console.log("0, 0: ", junctions[0][0].cones);
 	}
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
@@ -41,6 +44,23 @@
 		console.log("undoAction");
 		actions = actions.slice(0, actions.length - 1);
 	}
+
+	function updatePole(): void {
+		console.log("updatePole");
+		actions.forEach((action, i) => {
+			console.log("action i", i);
+			let currentPole = structuredClone(junctions[action.pole.coordinates[1]][action.pole.coordinates[0]]);
+			if (action.cone.color === Alliance.BLUE) {
+				currentPole.blueConeCount++;
+			} else {
+				currentPole.redConeCount++;
+			}
+			console.log("currentPole.cones before", currentPole.cones)
+			currentPole.cones = [...currentPole.cones, action.cone];
+			console.log("currentPole.cones after", currentPole.cones)
+			junctions[action.pole.coordinates[1]][action.pole.coordinates[0]] = currentPole;
+		});
+	}
 </script>
 
 <section>
@@ -50,7 +70,16 @@
 			{#each junctionRow as pole, j}
 				<div class="pole">
 					<p>
-						{pole.coordinates[0]},{pole.coordinates[1]} {pole.height}
+						Coordinates: {pole.coordinates[0]},{pole.coordinates[1]}
+						Height: {pole.height}
+						Blue: {pole.blueConeCount}
+						Red: {pole.redConeCount}
+						{#if pole.cones.length > 0}
+							{#each pole.cones as cone}
+								<span>{cone.color}</span>
+							{/each}
+						{/if}
+						|
 						<button on:click={() => addConeToPole(j ,i, Alliance.BLUE)}>Add Blue</button>
 						<button on:click={() => addConeToPole(j ,i, Alliance.RED)}>Add Red</button>
 					</p>
