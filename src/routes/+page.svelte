@@ -21,10 +21,10 @@
 	let actions: ConeAction[] = [];
 
 	$: {
-		console.log("actions", actions);
+		// console.log("actions", actions);
 		updatePole();
 		junctions = junctions;
-		console.log("0, 0: ", junctions[0][0].cones);
+		// console.log("0, 0: ", junctions[0][0].cones);
 	}
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
@@ -48,16 +48,18 @@
 	function updatePole(): void {
 		console.log("updatePole");
 		actions.forEach((action, i) => {
-			console.log("action i", i);
+			// console.log("action i", i);
+			// console.log("action.pole.coordinates[1] action.pole.coordinates[0]", action.pole.coordinates[1], action.pole.coordinates[0])
 			let currentPole = structuredClone(junctions[action.pole.coordinates[1]][action.pole.coordinates[0]]);
 			if (action.cone.color === Alliance.BLUE) {
 				currentPole.blueConeCount++;
 			} else {
 				currentPole.redConeCount++;
 			}
-			console.log("currentPole.cones before", currentPole.cones)
-			currentPole.cones = [...currentPole.cones, action.cone];
-			console.log("currentPole.cones after", currentPole.cones)
+			// console.log("currentPole.cones before", currentPole.cones);
+			// currentPole.cones = [...currentPole.cones, action.cone];
+			currentPole.cones.push(action.cone);
+			// console.log("currentPole.cones after", currentPole.cones);
 			junctions[action.pole.coordinates[1]][action.pole.coordinates[0]] = currentPole;
 		});
 	}
@@ -74,7 +76,7 @@
 						Height: {pole.height}
 						Blue: {pole.blueConeCount}
 						Red: {pole.redConeCount}
-						{#if pole.cones.length > 0}
+						{#if pole.cones.length < 0}
 							{#each pole.cones as cone}
 								<span>{cone.color}</span>
 							{/each}
@@ -89,4 +91,23 @@
 	{/each}
 
 	<button on:click={undoAction}>Undo</button>
+
+	<hr>
+
+	<h2>Recent Actions</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Color</th>
+				<th>Coordinates</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each actions as action}
+				<tr>
+					<td>{Alliance[action.cone.color]}</td>
+					<td>{action.cone.coordinates[0]},{action.cone.coordinates[1]}</td>
+				</tr>
+			{/each}
+	</table>
 </section>
