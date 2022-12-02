@@ -4,10 +4,12 @@
 </svelte:head>
 
 <script lang="ts">
+	import structuredClone from "@ungap/structured-clone";
+
 	import type {ConeAction} from "$lib/cone-action";
 	import type {Pole} from "$lib/pole";
 	import {PoleHeight} from "$lib/pole";
-	import {Alliance, ConeType} from "../lib/cone";
+	import {Alliance, ConeType} from "$lib/cone";
 
 	const originalJunctions: Pole[][] = [
 		[
@@ -95,6 +97,7 @@
 
 	<button on:click={undoAction}>Undo</button>
 	<button on:click={renderPole}>Render</button>
+	<button on:click={() => actions = []}>Clear</button>
 
 	<hr>
 
