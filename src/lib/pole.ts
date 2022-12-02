@@ -9,7 +9,8 @@ export enum PoleHeight {
 
 export interface Pole {
     height: PoleHeight;
-    coordinates: [number, number];
+    xCoordinate: number;
+    yCoordinate: number;
     cones: Cone[];
     blueConeCount: number;
     redConeCount: number;

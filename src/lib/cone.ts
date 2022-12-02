@@ -18,5 +18,6 @@ export interface Cone {
     category: ConeType;
     color: Alliance;
     robot?: Robot;
-    coordinates: [number, number];
+    xCoordinate: number;
+    yCoordinate: number;
 }
