@@ -19,6 +19,13 @@
 			{height: PoleHeight.LOW, xCoordinate: 3, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
 			{height: PoleHeight.GROUND, xCoordinate: 4, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
 		],
+		[
+			{height: PoleHeight.LOW, xCoordinate: 0, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
+			{height: PoleHeight.MEDIUM, xCoordinate: 1, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
+			{height: PoleHeight.HIGH, xCoordinate: 2, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
+			{height: PoleHeight.MEDIUM, xCoordinate: 3, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
+			{height: PoleHeight.LOW, xCoordinate: 4, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
+		],
 	];
 	let junctions: Pole[][] = structuredClone(originalJunctions);
 	let actions: ConeAction[] = [];
@@ -26,6 +33,7 @@
 	$: {
 		console.log("actions", actions);
 		console.log("junctions", junctions);
+		renderPole();
 	}
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
@@ -40,13 +48,11 @@
 			},
 			pole: structuredClone(junctions[yCoordinate][xCoordinate]),
 		}];
-		renderPole();
 	}
 
 	function undoAction(): void {
 		console.log("undoAction");
 		actions = actions.slice(0, actions.length - 1);
-		renderPole();
 	}
 
 	function renderPole(): void {
@@ -75,10 +81,10 @@
 		<div>
 			<p>Row: {i}</p>
 			{#each junctionRow as pole, j}
-				<div class="pole">
+				<div>
 					<p>
 						Coordinates: {pole.xCoordinate},{pole.yCoordinate} |
-						Height: {PoleHeight[pole.height]} |
+						{PoleHeight[pole.height]} |
 						Blue: {pole.blueConeCount}
 						Red: {pole.redConeCount}
 						{#if pole.cones.length < 0}
