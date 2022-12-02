@@ -22,7 +22,6 @@
 	let actions: ConeAction[] = [];
 
 	$: {
-		updatePole();
 		console.log("actions", actions);
 	}
 
@@ -38,11 +37,13 @@
 			},
 			pole: structuredClone(junctions[yCoordinate][xCoordinate]),
 		}];
+		updatePole();
 	}
 
 	function undoAction(): void {
 		console.log("undoAction");
 		actions = actions.slice(0, actions.length - 1);
+		updatePole();
 	}
 
 	function updatePole(): void {
