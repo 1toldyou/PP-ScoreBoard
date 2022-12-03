@@ -38,10 +38,10 @@
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
 		console.log("addConeToPole", xCoordinate, yCoordinate);
-		// if (gameStage === GameStage.PRE_GAME) {
-		// 	window.alert("Game has not started yet");
-		// 	return;
-		// }
+		if (gameStage === GameStage.PRE_GAME) {
+			window.alert("Game has not started yet");
+			return;
+		}
 
 		// for trigger reactivity
 		actions = [
@@ -91,6 +91,11 @@
 		let exportString = JSON.stringify(actions);
 		console.log("exportActions", exportString);
 	}
+
+	function setGameStage(stage: GameStage): void {
+		console.log("setGameStage", GameStage[stage]);
+		gameStage = stage;
+	}
 </script>
 
 <section>
@@ -120,35 +125,66 @@
 			{/each}
 		</div>
 	</div>
+</section>
 
+<hr>
 
+<section class="has-text-centered">
 	<button on:click={undoAction}>Undo</button>
 	<button on:click={renderBoard}>Render</button>
 	<button on:click={() => {actions = []; window.alert("cleared!")}}>Clear</button>
 	<button on:click={exportActions}>Export</button>
+</section>
 
-	<hr>
+<hr>
 
-	<ul>
-		<li>Pre Game</li>
-	</ul>
+<section>
+	<p class="has-text-centered">
+		<span
+				style={`${gameStage === GameStage.PRE_GAME? "text-decoration: underline" : ""}`}
+				on:click={() => setGameStage(GameStage.PRE_GAME)}
+				on:keypress={() => setGameStage(GameStage.PRE_GAME)}
+		>
+			Pre Game
+		</span>
+		<span
+				style={`${gameStage === GameStage.AUTO? "text-decoration: underline" : ""}`}
+				on:click={() => setGameStage(GameStage.AUTO)}
+				on:keypress={() => setGameStage(GameStage.AUTO)}
+		>
+			Auto
+		</span>
+		<span
+				style={`${gameStage === GameStage.TELEOP? "text-decoration: underline" : ""}`}
+				on:click={() => setGameStage(GameStage.TELEOP)}
+				on:keypress={() => setGameStage(GameStage.TELEOP)}
+		>
+			Teleop
+		</span>
+	</p>
+</section>
 
-	<hr>
+<hr>
 
+<section>
 	<h2>Recent Actions</h2>
-	<table>
-		<thead>
+	<div class="table-container">
+		<table class="table">
+			<thead>
 			<tr>
-				<th>Color</th>
 				<th>Coordinates</th>
+				<th>Color</th>
+				<th>Type</th>
 			</tr>
-		</thead>
-		<tbody>
-			{#each actions as action}
+			</thead>
+			<tbody>
+			{#each actions.slice(-10).reverse() as action}
 				<tr>
+					<td>({action.cone.xCoordinate}, {action.cone.yCoordinate})</td>
 					<td>{Alliance[action.cone.color]}</td>
-					<td>{action.cone.xCoordinate},{action.cone.yCoordinate}</td>
+					<td>{ConeType[action.cone.category]}</td>
 				</tr>
 			{/each}
-	</table>
+		</table>
+	</div>
 </section>
