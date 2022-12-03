@@ -6,57 +6,69 @@
 <script lang="ts">
 	import structuredClone from "@ungap/structured-clone";
 
-	import type {ConeAction} from "$lib/cone-action";
 	import type {Pole} from "$lib/pole";
 	import {PoleHeight} from "$lib/pole";
 	import {Alliance, ConeType} from "$lib/cone";
+	import type {GameAction} from "$lib/game-action";
+	import {GameStage} from "$lib/game-action";
+	import {originalJunctions} from "$lib/data";
 
-	const originalJunctions: Pole[][] = [
-		[
-			{height: PoleHeight.GROUND, xCoordinate: 0, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.LOW, xCoordinate: 1, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.GROUND, xCoordinate: 2, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.LOW, xCoordinate: 3, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.GROUND, xCoordinate: 4, yCoordinate: 0, cones: [], blueConeCount: 0, redConeCount: 0},
-		],
-		[
-			{height: PoleHeight.LOW, xCoordinate: 0, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.MEDIUM, xCoordinate: 1, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.HIGH, xCoordinate: 2, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.MEDIUM, xCoordinate: 3, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
-			{height: PoleHeight.LOW, xCoordinate: 4, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
-		],
-	];
+
 	let junctions: Pole[][] = structuredClone(originalJunctions);
-	let actions: ConeAction[] = [];
+	let actions: GameAction[] = [];
+	let gameStage: GameStage = GameStage.PRE_GAME;
+	let currentConeType: ConeType = ConeType.REGULAR;
 
 	$: {
-		console.log("actions", actions);
-		console.log("junctions", junctions);
-		renderPole();
+		console.debug("actions", actions);
+		console.debug("junctions", junctions);
+
+		switch (gameStage) {
+			case GameStage.AUTO:
+				currentConeType = ConeType.AUTO;
+				break;
+			case GameStage.TELEOP:
+				currentConeType = ConeType.REGULAR;
+				break;
+		}
+
+		renderBoard();
 	}
+
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
 		console.log("addConeToPole", xCoordinate, yCoordinate);
+		if (gameStage === GameStage.PRE_GAME) {
+			window.alert("Game has not started yet");
+			return;
+		}
+
 		// for trigger reactivity
-		actions = [...actions, {
-			cone: {
-				category: ConeType.REGULAR,
-				color: color,
-				xCoordinate: xCoordinate,
-				yCoordinate: yCoordinate,
-			},
-			pole: structuredClone(junctions[yCoordinate][xCoordinate]),
-		}];
+		actions = [
+				...actions,
+				{
+					cone: {
+						category: currentConeType,
+						color: color,
+						xCoordinate: xCoordinate,
+						yCoordinate: yCoordinate,
+					},
+					pole: structuredClone(junctions[yCoordinate][xCoordinate]),
+				}
+		];
 	}
 
 	function undoAction(): void {
-		console.log("undoAction");
+		console.log("undoAction()");
+		if (actions.length == 0) {
+			window.alert("No actions to undo");
+			return;
+		}
 		actions = actions.slice(0, actions.length - 1);
 	}
 
-	function renderPole(): void {
-		console.log("updatePole");
+	function renderBoard(): void {
+		console.log("render()");
 
 		let newJunctions: Pole[][] = structuredClone(originalJunctions);
 
@@ -73,6 +85,11 @@
 		}
 
 		junctions = structuredClone(newJunctions);
+	}
+
+	function exportActions(): void {
+		let exportString = JSON.stringify(actions);
+		console.log("exportActions", exportString);
 	}
 </script>
 
@@ -102,8 +119,15 @@
 	{/each}
 
 	<button on:click={undoAction}>Undo</button>
-	<button on:click={renderPole}>Render</button>
-	<button on:click={() => actions = []}>Clear</button>
+	<button on:click={renderBoard}>Render</button>
+	<button on:click={() => {actions = []; window.alert("cleared!")}}>Clear</button>
+	<button on:click={exportActions}>Export</button>
+
+	<hr>
+
+	<ul>
+		<li>Pre Game</li>
+	</ul>
 
 	<hr>
 
