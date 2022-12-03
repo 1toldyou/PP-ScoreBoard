@@ -12,12 +12,18 @@
 	import type {GameAction} from "$lib/game-action";
 	import {GameStage} from "$lib/game-action";
 	import {originalJunctions} from "$lib/data";
+	import type {Scoring} from "$lib/scoring";
+	import {computeScore} from "$lib/scoring";
 
 
 	let junctions: Pole[][] = structuredClone(originalJunctions);
 	let actions: GameAction[] = [];
 	let gameStage: GameStage = GameStage.PRE_GAME;
 	let currentConeType: ConeType = ConeType.REGULAR;
+	let score: Scoring = {
+		blueTotal: 0,
+		redTotal: 0,
+	}
 
 	$: {
 		console.debug("actions", actions);
@@ -33,6 +39,7 @@
 		}
 
 		renderBoard();
+		score = computeScore(actions);
 	}
 
 
@@ -162,6 +169,29 @@
 			Teleop
 		</span>
 	</p>
+</section>
+
+<hr>
+
+<section>
+	<div class="table-container">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>Red</th>
+					<th>Blue</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Total</td>
+					<td>{score.redTotal}</td>
+					<td>{score.blueTotal}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 <hr>
