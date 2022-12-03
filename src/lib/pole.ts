@@ -1,10 +1,12 @@
 import type {Cone} from "./cone";
 
+// the number behind the enum represent points for each cone on the junction
 export enum PoleHeight {
-    GROUND,
-    LOW,
-    MEDIUM,
-    HIGH,
+    TERMINAL = 1,
+    GROUND = 2,
+    LOW = 3,
+    MEDIUM = 4,
+    HIGH = 5,
 }
 
 export interface Pole {
