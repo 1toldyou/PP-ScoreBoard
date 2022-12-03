@@ -4,10 +4,12 @@
 </svelte:head>
 
 <script lang="ts">
+	import "$lib/junction.css";
+
 	import structuredClone from "@ungap/structured-clone";
 
 	import type {Pole} from "$lib/pole";
-	import {PoleHeight} from "$lib/pole";
+	import {PoleHeight, getPoleCSS} from "$lib/pole";
 	import {Alliance, ConeType} from "$lib/cone";
 	import type {GameAction} from "$lib/game-action";
 	import {GameStage} from "$lib/game-action";
@@ -94,29 +96,33 @@
 </script>
 
 <section>
-	{#each junctions as junctionRow, i}
-		<div>
-			<p>Row: {i}</p>
-			{#each junctionRow as pole, j}
-				<div>
-					<p>
-						Coordinates: {pole.xCoordinate},{pole.yCoordinate} |
-						{PoleHeight[pole.height]} |
-						Blue: {pole.blueConeCount}
-						Red: {pole.redConeCount}
-						{#if pole.cones.length < 0}
-							{#each pole.cones as cone}
-								<span>{cone.color}</span>
-							{/each}
-						{/if}
-						|
-						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.BLUE)}>Add Blue</button>
-						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.RED)}>Add Red</button>
-					</p>
-				</div>
+	<div style="display: flex; justify-items: center; align-items: center;">
+		<div class="field">
+			{#each junctions as junctionRow, i}
+				{#each junctionRow as pole, j}
+					<div class={getPoleCSS(pole)}>
+						<div>▲</div>
+						<!--					<p>-->
+						<!--						Coordinates: {pole.xCoordinate},{pole.yCoordinate} |-->
+						<!--						{PoleHeight[pole.height]} |-->
+						<!--						Blue: {pole.blueConeCount}-->
+						<!--						Red: {pole.redConeCount}-->
+						<!--						{#if pole.cones.length < 0}-->
+						<!--							{#each pole.cones as cone}-->
+						<!--								<span>{cone.color}</span>-->
+						<!--							{/each}-->
+						<!--						{/if}-->
+						<!--						|-->
+						<!--						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.BLUE)}>Add Blue</button>-->
+						<!--						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.RED)}>Add Red</button>-->
+						<!--					</p>-->
+						<div>▲</div>
+					</div>
+				{/each}
 			{/each}
 		</div>
-	{/each}
+	</div>
+
 
 	<button on:click={undoAction}>Undo</button>
 	<button on:click={renderBoard}>Render</button>

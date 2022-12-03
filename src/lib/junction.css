@@ -1,0 +1,85 @@
+.field {
+    display: grid;
+    align-self: center;
+    border: solid #0008 2pt;
+}
+
+/* was .term */
+.terminal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.junction.ground {
+    background: radial-gradient(#ddd 0%, #ddd 8%, #000 15%, #0000 15%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.ground.red {
+    background: radial-gradient(red 0%, red 3%, black 15%, transparent 15%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.ground.blue {
+    background: radial-gradient(lightblue 0%, blue 5%, black 15%, transparent 15%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+
+.junction.low {
+    background: radial-gradient(#ff0 0%, #ff0 5%, #000 6%, #0000 7%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.low.red {
+    background: radial-gradient(red 0%, red 5%, #000 6%, #0000 7%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+
+.junction.low.blue {
+    background: radial-gradient(blue 0%, blue 5%, #000 6%, #0000 7%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+
+.junction.medium {
+    background: radial-gradient(yellow 0%, yellow 8%, black 9%, transparent 10%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.medium.red {
+    background: radial-gradient(red 0%, red 8%, black 9%, transparent 10%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.medium.blue {
+    background: radial-gradient(blue 0%, blue 8%, black 9%, transparent 10%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+
+.junction.high {
+    background: radial-gradient(yellow 0%, yellow 12%, black 13%, transparent 14%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.high.red {
+    background: radial-gradient(red 0%, red 12%, black 13%, transparent 14%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+.junction.high.blue {
+    background: radial-gradient(blue 0%, blue 12%, black 13%, transparent 14%),
+    linear-gradient(0deg, #fff2 49%, #0008 49%, #0008 51%, #fff2 51%) no-repeat,
+    linear-gradient(90deg, #fff8 49%, #0008 49%, #0008 51%, #fff8 51%) no-repeat;
+}
+
+/* was .normal */
+.junction {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: center;
+}
