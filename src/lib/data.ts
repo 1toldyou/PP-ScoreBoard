@@ -16,4 +16,25 @@ export const originalJunctions: Pole[][] = [
         {height: PoleHeight.MEDIUM, xCoordinate: 3, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
         {height: PoleHeight.LOW, xCoordinate: 4, yCoordinate: 1, cones: [], blueConeCount: 0, redConeCount: 0},
     ],
-];
+    [
+        {height: PoleHeight.GROUND, xCoordinate: 0, yCoordinate: 2, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.HIGH, xCoordinate: 1, yCoordinate: 2, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.GROUND, xCoordinate: 2, yCoordinate: 2, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.HIGH, xCoordinate: 3, yCoordinate: 2, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.GROUND, xCoordinate: 4, yCoordinate: 2, cones: [], blueConeCount: 0, redConeCount: 0},
+    ],
+    [
+        {height: PoleHeight.LOW, xCoordinate: 0, yCoordinate: 3, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.MEDIUM, xCoordinate: 1, yCoordinate: 3, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.HIGH, xCoordinate: 2, yCoordinate: 3, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.MEDIUM, xCoordinate: 3, yCoordinate: 3, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.LOW, xCoordinate: 4, yCoordinate: 3, cones: [], blueConeCount: 0, redConeCount: 0},
+    ],
+    [
+        {height: PoleHeight.GROUND, xCoordinate: 0, yCoordinate: 4, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.LOW, xCoordinate: 1, yCoordinate: 4, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.GROUND, xCoordinate: 2, yCoordinate: 4, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.LOW, xCoordinate: 3, yCoordinate: 4, cones: [], blueConeCount: 0, redConeCount: 0},
+        {height: PoleHeight.GROUND, xCoordinate: 4, yCoordinate: 4, cones: [], blueConeCount: 0, redConeCount: 0},
+    ],
+].reverse();

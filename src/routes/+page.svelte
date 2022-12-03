@@ -4,8 +4,6 @@
 </svelte:head>
 
 <script lang="ts">
-	import "$lib/junction.css";
-
 	import structuredClone from "@ungap/structured-clone";
 
 	import type {Pole} from "$lib/pole";
@@ -40,10 +38,10 @@
 
 	function addConeToPole(xCoordinate: number, yCoordinate: number, color: Alliance): void {
 		console.log("addConeToPole", xCoordinate, yCoordinate);
-		if (gameStage === GameStage.PRE_GAME) {
-			window.alert("Game has not started yet");
-			return;
-		}
+		// if (gameStage === GameStage.PRE_GAME) {
+		// 	window.alert("Game has not started yet");
+		// 	return;
+		// }
 
 		// for trigger reactivity
 		actions = [
@@ -96,29 +94,29 @@
 </script>
 
 <section>
-	<div style="display: flex; justify-items: center; align-items: center;">
+	<div class="tile is-ancestor">
 		<div class="field">
 			{#each junctions as junctionRow, i}
-				{#each junctionRow as pole, j}
-					<div class={getPoleCSS(pole)}>
-						<div>▲</div>
-						<!--					<p>-->
-						<!--						Coordinates: {pole.xCoordinate},{pole.yCoordinate} |-->
-						<!--						{PoleHeight[pole.height]} |-->
-						<!--						Blue: {pole.blueConeCount}-->
-						<!--						Red: {pole.redConeCount}-->
-						<!--						{#if pole.cones.length < 0}-->
-						<!--							{#each pole.cones as cone}-->
-						<!--								<span>{cone.color}</span>-->
-						<!--							{/each}-->
-						<!--						{/if}-->
-						<!--						|-->
-						<!--						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.BLUE)}>Add Blue</button>-->
-						<!--						<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.RED)}>Add Red</button>-->
-						<!--					</p>-->
-						<div>▲</div>
-					</div>
-				{/each}
+				<div class="tile is-parent">
+					{#each junctionRow as pole, j}
+						<div class="tile is-child box">
+							<!-- <div>▲</div> -->
+							<p>
+								({pole.xCoordinate},{pole.yCoordinate})
+								{PoleHeight[pole.height]}
+								Blue: {pole.blueConeCount}
+								Red: {pole.redConeCount}
+								{#if pole.cones.length < 0}
+									{#each pole.cones as cone}
+										<span>{cone.color}</span>
+									{/each}
+								{/if}
+								<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.BLUE)}>Add Blue</button>
+								<button on:click={() => addConeToPole(pole.xCoordinate, pole.yCoordinate, Alliance.RED)}>Add Red</button>
+							</p>
+						</div>
+					{/each}
+				</div>
 			{/each}
 		</div>
 	</div>
