@@ -23,11 +23,15 @@
 	let score: Scoring = {
 		blueTotal: 0,
 		redTotal: 0,
+		blueAutoConeScore: 0,
+		redAutoConeScore: 0,
+		blueTeleopConeScore: 0,
+		redTeleopConeScore: 0,
 	}
 
 	$: {
-		console.debug("actions", actions);
-		console.debug("junctions", junctions);
+		// console.debug("actions", actions);
+		// console.debug("junctions", junctions);
 
 		switch (gameStage) {
 			case GameStage.AUTO:
@@ -188,6 +192,16 @@
 					<td>Total</td>
 					<td>{score.redTotal}</td>
 					<td>{score.blueTotal}</td>
+				</tr>
+				<tr>
+					<td>Auto Cone</td>
+					<td>{score.redAutoConeScore}</td>
+					<td>{score.blueAutoConeScore}</td>
+				</tr>
+				<tr>
+					<td>TeleOp Cone</td>
+					<td>{score.redTeleopConeScore}</td>
+					<td>{score.blueTeleopConeScore}</td>
 				</tr>
 			</tbody>
 		</table>
